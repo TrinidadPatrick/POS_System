@@ -15,6 +15,7 @@ const Login = () => {
 
     })
     const [fieldError, setFieldError] = useState([])
+    const [text, settext] = useState('')
 
     const handleChange = (key, value) => {
         setFields({...fields, [key] : value})
@@ -31,14 +32,15 @@ const Login = () => {
                 navigate('/products')
             }
         } catch (error) {
+            settext(String(error))
             console.log(error)
         }
     }
   return (
     <main className='w-full h-full bg-theme-extraLight flex flex-col justify-center items-center'>
         {/* Main Container */}
-        <div className='w-[90%] xl:w-[70%] h-[90%] bg-white shadow-lg rounded-2xl grid grid-cols-2 overflow-hidden'>
-            <div className=' col-span-1 bg-white flex p-10 relative'>
+        <div className='w-[90%] xl:w-[70%] h-[90%] bg-white shadow-lg rounded-2xl grid grid-cols-1 sm:grid-cols-2 overflow-hidden'>
+            <div className='hidden sm:flex col-span-1 bg-white p-10 relative'>
                 <img src={loginImage} alt="image" className='-top-[20] ' />
             </div>
             {/* Right Container */}
@@ -46,6 +48,7 @@ const Login = () => {
                 <div id='Logo_container' className='w-full flex justify-center py-0'>
                     <img src={logo} alt="Logo" className='w-48' />
                 </div>
+                <p>{text}</p>
                 <div className='w-full  flex flex-col space-y-2 '>
                     {/* Email */}
                     <div className='w-full  flex flex-col items-start'>
@@ -55,7 +58,7 @@ const Login = () => {
                     {/* Password */}
                     <div className='w-full  flex flex-col items-start'>
                         <label className='text-gray-400 my-1'>Password</label>
-                        <input value={fields.password} onChange={(e)=>{handleChange('password', e.target.value)}} type="password" className='p-2 w-full border-2 border-gray-100 rounded-md' />
+                        <input value={fields.password} onChange={(e)=>{handleChange('password', e.target.value)}} type="text" className='p-2 w-full border-2 border-gray-100 rounded-md' />
                      {/* Already registered? */}
                         <div className='w-full flex justify-end'>
                         <Link to='/register' ><p className='text-sm text-theme-semiLight py-0.5'>Not registered?</p></Link>
@@ -63,7 +66,7 @@ const Login = () => {
                     </div>
                     {/* Login Button */}
                     <div className='w-full py-1'>
-                        <button onClick={()=>submit()} className='w-full py-3 bg-theme-medium text-white rounded-md'>Sign in</button>
+                        <button onClick={()=>submit()} className='w-full py-3 hover:bg-theme-light bg-theme-medium text-white rounded-md'>Sign in</button>
                     </div>
                    
                 </div>

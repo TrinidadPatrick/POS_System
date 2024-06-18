@@ -24,11 +24,10 @@ const InventoryHeader = () => {
 
   return (
     <div className='w-full flex items-center justify-between'>
-        <h1 className='flex-1 font-medium text-2xl text-gray-700'>Product Inventory</h1>
-
-        <div className=' flex items-center space-x-2'>
+        <h1 className='flex-1 hidden sm:flex font-medium text-sm md:text-2xl text-gray-700'>Product Inventory</h1>
+        <div className='hidden sm:flex items-center space-x-2 p-2 pb-0'>
             <button onClick={()=>setIsCategoryModalOpen(true)} className='px-2 py-1 rounded-sm border-2 border-theme-medium text-gray-700 text-sm'>Manage categories</button>
-            <button onClick={()=>setIsProductModalOpen(true)} className='px-2 py-1 rounded-sm  bg-theme-medium text-white text-sm'>Add product</button>
+            <button onClick={()=>setIsProductModalOpen(true)} className='px-2 py-1 rounded-sm border-2 border-theme-medium bg-theme-medium text-white text-sm'>Add product</button>
         </div>
 
         <Modal ariaHideApp={false} isOpen={isProductModalOpen} style={modalStyles}>

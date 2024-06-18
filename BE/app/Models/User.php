@@ -18,6 +18,16 @@ class User extends Authenticatable
         return $this->hasMany(Category::class);
     }
 
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -28,6 +38,7 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.

@@ -1,21 +1,25 @@
 import React from 'react'
-import http from '../../http'
 import { useState, useEffect } from 'react'
 import emptyImage from '../../MainUtilities/EmptyImage/empty-image.png'
 import EditProductModal from './EditProductModal'
 import productStore from '../../Store/ProductStore'
 import Modal from 'react-modal';
-import ProductProvider from '../../Hooks/ProductProvider'
 import { LiaSearchSolid } from "react-icons/lia";
 import { MdClear } from "react-icons/md";
-import { FaFilter } from "react-icons/fa";
 import 'rsuite/dist/rsuite.min.css';
 import { Dropdown } from 'rsuite';
 import categoryStore from '../../Store/CategoryStore'
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { IoAddOutline } from "react-icons/io5";
+import AddProductModal from './AddProductModal'
+import ManageCategoryModal from './ManageCategoryModal'
+import { TbCategory } from "react-icons/tb";
 
 
 const ProductTable = () => {
   const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const {categoryList} = categoryStore()
   const {productList, insertProduct} = productStore()
   const [productToEdit, setProductToEdit] = useState(null)
@@ -161,28 +165,17 @@ const ProductTable = () => {
 
 
   return (
-    <div className="relative overflow-x-auto shadow-sm sm:rounded-lg mt-3 p-1 flex flex-col gap-2  h-full">
+    <div className="relative sm:rounded-lg mt-3 p-1 flex flex-col gap-2  h-full">
         {/* Navigation */}
-        <div className='w-full flex items-center gap-3 '>
-            {/* Search */}
-            <div className='w-56 relative'>
-                <input value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} onKeyDown={(e)=>{if(e.key === "Enter"){handleSearch()}}} placeholder='Search product...' className='text-sm p-2 border outline-none rounded w-full focus:border-theme-semiLight' type="text" />
-                {
-                    !activeSearch ? 
-                    <button onClick={()=>handleSearch()} className='absolute right-2 top-2'>
-                    <LiaSearchSolid size={20} color='gray' />
-                    </button>
-                    :
-                    <button onClick={()=>clearSearch()} className='absolute right-2 top-2'>
-                    <MdClear size={20} color='gray' />
-                    </button>  
-                }
-            </div>
+        <div className='w-fit rounded flex items-center gap-0 '>
+            {/* Filter */}
             <div className=' gap-2 h-full  flex'>
                     <Dropdown title="Filter"
                     renderToggle={(props, ref) => (
-                    <button {...props} ref={ref} className="bg-theme-medium text-white px-3 h-full rounded">
-                        <FaFilter size={15} />
+                    <button {...props} ref={ref} className="text-xs sm:text-sm flex items-center bg-theme-medium border border-theme-medium border-e-0 text-white ps-1 pe-0  sm:ps-2 sm:pe-1 h-full rounded-s">
+                        Filter
+                        <RiArrowDropDownLine size={20} />
+                        {/* <FaFilter color='white' size={15} /> */}
                     </button>
                     )}
                     >
@@ -204,9 +197,35 @@ const ProductTable = () => {
                     </Dropdown.Menu>
                     </Dropdown>
             </div>
+            {/* Search */}
+            <div className=' w-40 sm:w-56 relative'>
+                <input value={searchValue} onChange={(e)=>setSearchValue(e.target.value)} onKeyDown={(e)=>{if(e.key === "Enter"){handleSearch()}}} placeholder='Search product...' className='text-xs sm:text-sm p-2 pe-10 border outline-none rounded-e w-full  focus:border-theme-semiLight' type="text" />
+                {
+                    !activeSearch ? 
+                    <button onClick={()=>handleSearch()} className='absolute right-1 top-1.5 sm:right-2 sm:top-2'>
+                    <LiaSearchSolid  size={20} color='gray' />
+                    </button>
+                    :
+                    <button onClick={()=>clearSearch()} className='absolute right-2 top-2'>
+                    <MdClear size={20} color='gray' />
+                    </button>  
+                }
+            </div>
+
+            {/* Add product and Category */}
+            <div className='flex items-center h-full mx-2 gap-2'>
+                <button onClick={()=>setIsProductModalOpen(true)} className='h-full sm:hidden px-1.5 bg-theme-medium rounded'>
+                    <IoAddOutline color='white' size={25} />
+                </button>
+                <button onClick={()=>setIsCategoryModalOpen(true)} className='h-full sm:hidden px-1.5 bg-theme-medium rounded'>
+                    <TbCategory color='white' size={25} />
+                </button>
+            </div>
         </div>
-    <table className="w-full table-auto text-sm text-left rtl:text-right  text-gray-500 ">
-        <thead className="text-xs text-gray-700 uppercase  bg-gray-100 ">
+    <div className='w-full overflow-auto h-full rounded-md'>
+    <div className=' overflow-auto rounded-md w-full h-full bg-white border'>
+    <table className="w-full table-auto overflow-auto text-sm text-left rtl:text-right rounded text-gray-500 ">
+        <thead className="text-xs text-gray-700 uppercase rounded bg-gray-100 ">
             <tr>
                 <th scope="col" className="px-6 py-3">
                     Image
@@ -327,9 +346,18 @@ const ProductTable = () => {
         }
         </tbody>
     </table>
+    </div>
+    </div>
 
     <Modal ariaHideApp={false} isOpen={isEditProductModalOpen} style={modalStyles}>
         <EditProductModal productToEdit={productToEdit} setIsEditProductModalOpen={setIsEditProductModalOpen}  />
+    </Modal>
+    <Modal ariaHideApp={false} isOpen={isProductModalOpen} style={modalStyles}>
+        <AddProductModal setIsProductModalOpen={setIsProductModalOpen} />
+        </Modal>
+
+    <Modal ariaHideApp={false} isOpen={isCategoryModalOpen} style={modalStyles}>
+        <ManageCategoryModal setIsCategoryModalOpen={setIsCategoryModalOpen} />
     </Modal>
 </div>
   )

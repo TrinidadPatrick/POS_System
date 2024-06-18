@@ -57,7 +57,7 @@ const AddProductModal = ({setIsProductModalOpen}) => {
     }
     
     useEffect(()=>{
-      setProductDetails({...productDetails, product_category : Number(categoryList[0]?.id)})
+      setProductDetails({...productDetails, product_category : Number(categoryList.sort((a,b)=> new Date(b.created_at) - new Date(a.created_at))[0]?.id)})
     },[categoryList])
 
     const addVariant = () => {
@@ -121,7 +121,7 @@ const AddProductModal = ({setIsProductModalOpen}) => {
       const file = e.target.files[0];
       if(file)
       {
-        resizeImage(file, 300, 300, async (blob) => { // Adjust maxWidth and maxHeight as needed
+        resizeImage(file, 800, 800, async (blob) => { // Adjust maxWidth and maxHeight as needed
           const formData = new FormData();
           formData.append('file', blob);
           formData.append('upload_preset', 'POS_Product_Image'); // Set up upload presets in Cloudinary dashboard

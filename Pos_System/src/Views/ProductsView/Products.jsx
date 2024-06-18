@@ -14,30 +14,9 @@ const Products = () => {
   const {productList, insertProduct} = productStore()
   const {categoryList, insertCategory} = categoryStore()
 
-  const fetchCategories = async () => {
-    const categories = await getCategories()
-    insertCategory(categories)
-  }
-
-  const fetchProducts = async () => {
-    try {
-      const data = await getProducts()
-      insertProduct(data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(()=>{
-    const fetchData = async () => {
-      await fetchProducts()
-      await fetchCategories()
-    }
-    fetchData()
-  },[])
-
   return (
-    <div className='flex-1 flex flex-col h-full bg-slate-50 p-2 overflow-x-auto'>
+    
+    <div className='flex-1 flex flex-col h-full bg-[#fafafa] p-2 overflow-x-auto'>
     <InventoryHeader />
     <ProductTable />
     <ToastContainer />

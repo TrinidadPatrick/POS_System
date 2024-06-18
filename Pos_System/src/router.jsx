@@ -8,6 +8,7 @@ import NotFound from './NotFound'
 import Products from './Views/ProductsView/Products'
 import Reports from './Views/ReportsView/Reports'
 import Account from './Views/AccountView/Account'
+import Expense from './Views/ExpenseView/Expense'
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: '/products',
                 element: <Products />
+            },
+            {
+                path: '/expense',
+                element: <Expense />
             },
             {
                 path: '/reports',

@@ -27,7 +27,6 @@ class ProductRequest extends FormRequest
             'productDetails.product_name' => 'required|string|max:255',
             'productDetails.product_price' => 'nullable|numeric',  // Allow null values
             'productDetails.product_stock' => 'nullable|integer|min:0',
-            'productDetails.is_active' => 'required|integer',
             'variants' => 'array|min:0',
         ];
     }

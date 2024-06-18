@@ -10,6 +10,7 @@ use App\Models\Products;
 use App\Models\ProductVariation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -19,8 +20,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+
         return ProductResource::collection(
-            Product::with(['category', 'variations'])->get()
+            Product::where('user_id', Auth::user()->id)->with(['category', 'variations'])->get()
         );
     }
 
@@ -84,7 +86,6 @@ class ProductController extends Controller
             'product_name' => $validated['productDetails']['product_name'],
             'product_price' => $validated['productDetails']['product_price'],
             'product_stock' => $validated['productDetails']['product_stock'],
-            'is_active' => $validated['productDetails']['is_active'],
         ]);
 
         $newVariants = $validated['variants'];
