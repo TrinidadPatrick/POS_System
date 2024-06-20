@@ -50,13 +50,12 @@ const RightView = () => {
                 order_status : "PENDING",
                 created_at: new Date()
             }
-            insertOrders([...orderItems, data])
             insertOrder({customer_name : '', orderList : []})
             setAmount(0)
 
             try {
                 const result = await http.post('order', data)
-                console.log(result.data)
+                insertOrders([...orderItems, result.data.order])
             } catch (error) {
                 console.log(error)
             }
@@ -71,7 +70,7 @@ const RightView = () => {
         <div className='w-full flex items-center justify-between'>
             <h5 className='text-gray-800'>Order Details</h5>
             <button onClick={()=>setIsOrderModalOpen(true)} className='p-1.5 bg-theme-medium rounded relative'>
-                {orderItems.length !== 0 && <span className='-left-1 -top-1 absolute w-5 h-5 flex items-center justify-center rounded-full bg-red-500 text-xs text-white'>{orderItems?.length}</span>}
+                {orderItems?.filter((item)=> item.order_status === "PENDING").length !== 0 && <span className='-left-1 -top-1 absolute w-5 h-5 flex items-center justify-center rounded-full bg-red-500 text-xs text-white'>{orderItems?.filter((item)=> item.order_status === "PENDING").length}</span>}
                 <FaClipboardList size={20} color='white' />
             </button>
         </div>

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
+import reportStore from '../../Store/ReportsStore'
 
-const CustomerChart = ({customers}) => {
+const CustomerChart = () => {
+
+    const {report} = reportStore()
 
     const [customersData, setCustomersData] = useState([
         { name: 'Jan', Customers: 0, },
@@ -28,20 +31,9 @@ const CustomerChart = ({customers}) => {
             tools: {
                 download: true,
                 selection: true,
-                zoom: false,
-                zoomin: true,
-                zoomout: true,
-                pan: false,
-                reset: false ,
-                customIcons: []
+                zoom: true,
               },
          },
-         margin: {
-            top: 0,
-            right: 0,
-            bottom: 0,
-            left: 0,
-          },
         },
         title: {
             text: 'Customers data',
@@ -63,17 +55,8 @@ const CustomerChart = ({customers}) => {
             enabled: true,
             
           },
-          markers: {
-            size: 4, // Adjust the size of the circles
-            strokeWidth: 0, // Set to 0 to remove the stroke around the circles
-          },
           stroke: {
             curve: 'smooth'
-          },
-          legend: {
-            position: 'top',
-            offsetY: 3, // Adjust the offset as needed
-            height: 18, // Adjust the height as needed
           },
     };
     
@@ -88,7 +71,7 @@ const CustomerChart = ({customers}) => {
 
     // Getting the number of customers per month
     useEffect(()=>{
-        const groupedData = customers.reduce((acc, obj) => {
+        const groupedData = report.ReportsForTheYear.reduce((acc, obj) => {
             const monthYear = obj.created_at.slice(0, 7)
             if(!acc[monthYear]){
                 acc[monthYear] = []
@@ -112,7 +95,7 @@ const CustomerChart = ({customers}) => {
             ])
         })
 
-    },[customers])
+    },[report])
 
 
   return (

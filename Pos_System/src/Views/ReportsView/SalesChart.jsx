@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Chart from 'react-apexcharts'
+import reportStore from '../../Store/ReportsStore'
 
-const SalesChart = ({customers}) => {
+const SalesChart = () => {
+    const {report} = reportStore()
     const [SalesData, setSalesData] = useState([
         { name: 'Jan', Sales: 0, },
         { name: 'Feb', Sales: 0, },
@@ -20,7 +22,6 @@ const SalesChart = ({customers}) => {
     const chartOptions = {
         chart: {
             id: "simple-bar",
-            height: 350,
           },
           title: {
             text: 'Sales data',
@@ -36,14 +37,24 @@ const SalesChart = ({customers}) => {
                 ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             ,
           },
+          // 
+          yaxis: {
+            forceNiceScale: true,
+            tickAmount: 3,
+            labels: {
+              formatter: function (value) {
+                return value.toFixed(0);
+              }
+            }
+          },
           grid: {
-            show: false // This will remove the grid lines
+            show: true // This will remove the grid lines
           },
           stroke: {
             curve: 'smooth'
           },
           dataLabels: {
-            enabled: false,
+            enabled: true,
             
           },
           markers: {
@@ -62,7 +73,7 @@ const SalesChart = ({customers}) => {
     ];
 
     useEffect(()=>{
-                const groupedData = customers.reduce((acc, obj) => {
+                const groupedData = report.ReportsForTheYear.reduce((acc, obj) => {
                     const monthYear = obj.created_at.slice(0, 7)
                     if(!acc[monthYear]){
                         acc[monthYear] = []
@@ -85,7 +96,8 @@ const SalesChart = ({customers}) => {
                     ])
                 })
 
-    },[customers])
+    },[report])
+
 
   return (
     <div>

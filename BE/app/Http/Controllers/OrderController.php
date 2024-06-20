@@ -42,6 +42,7 @@ class OrderController extends Controller
                 'order_number' => $validated['order_number'],
                 'total_price' => $validated['total_price'],
                 'amount_paid' => $validated['amount_paid'],
+                'order_status' => "PENDING",
             ]);
 
             $order_number = $validated['order_number'];
@@ -71,7 +72,7 @@ class OrderController extends Controller
 
                 DB::commit();
 
-                return response()->json(['order' => $order, 'order_items' => $orderItems], 201);
+                return response()->json(['order' => $order], 201);
             }
 
 

@@ -27,7 +27,7 @@ const OrderListModal = ({setIsOrderModalOpen}) => {
         insertOrders(newOrderItems)
 
         try {
-            const result = await http.patch(`order/${newOrderItems[index].id}`, JSON.stringify({order_status : 'COMPLETE'}))
+            const result = await http.patch(`order/${newOrderItems[index].id}`, JSON.stringify({order_status : 'CANCELLED'}))
         } catch (error) {
             console.log(error)
         }

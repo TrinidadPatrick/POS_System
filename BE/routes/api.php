@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
@@ -42,8 +43,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/order', OrderController::class);
 
     // Report Api
-    Route::get('/getCustomerReport', [ReportController::class, 'GetCustomerReport']);
+    Route::get('/getReports', [ReportController::class, 'GetReports']);
+    Route::get('/filterReports', [ReportController::class, 'GetReportsWithFilter']);
 
     // Expense Api
-    Route::resource('/expense', OrderController::class);
+    Route::resource('/expense', ExpenseController::class);
+    Route::get('/filterExpense', [ExpenseController::class, 'filterShow']);
 });
