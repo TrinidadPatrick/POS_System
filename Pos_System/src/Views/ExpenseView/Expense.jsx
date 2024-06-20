@@ -17,7 +17,7 @@ const Expense = () => {
     start_date : '',
     end_date : ''
   })
-  const [expenses, setExpenses] = useState([])
+  const [expenses, setExpenses] = useState(null)
 
   const fetchExpense = async () => {
     const expenses = await getExpenses()
@@ -74,7 +74,14 @@ const Expense = () => {
 
       {/* Expense Table */}
       <div className='flex-1 flex flex-col mt-5'>
-        <ExpenseTable expenses={expenses} setExpenses={setExpenses} />
+        {
+          expenses?.length !== 0 ?
+          <ExpenseTable expenses={expenses} setExpenses={setExpenses} />
+          :
+          <div className='flex-1 flex justify-center items-center'>
+            <h3 className='text-gray-400'>There are currently no expenses</h3>
+          </div>
+        }
       </div>
 
       <Modal open={open} styles={{modal : {borderRadius : 5}}} onClose={()=>setOpen(false)} center>

@@ -46,9 +46,15 @@ const LeftView = ({toggleRightView}) => {
                     <p className='text-[0.7rem] lg:text-xs'>{date}</p>
                 </div>
                 <div className='h-full'>
-                    <div className='h-full aspect-square flex items-center justify-center ps-0.5 pt-0.5 rounded-full bg-blue-500'>
+                    {
+                        user?.profile_picture ? 
+                        <img src={user?.profile_picture} alt='profile' className='w-10 rounded-full aspect-square object-cover' />
+                        
+                        :
+                        <div className='h-full aspect-square flex items-center justify-center ps-0.5 pt-0.5 rounded-full bg-blue-500'>
                         <p className='text-white text-2xl'>{user?.name?.charAt(0)}</p>
-                    </div>
+                        </div>
+                    }
                 </div>
             </div>
 

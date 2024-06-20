@@ -56,7 +56,7 @@ const ExpenseTable = ({expenses, setExpenses}) => {
             </thead>
             <tbody>
                 {
-                    expenses.map((expense, index)=>{
+                    expenses?.map((expense, index)=>{
                         const dateCreated = new Date(expense.created_at).toLocaleDateString('EN-US', {
                             month : 'long',
                             day : '2-digit',

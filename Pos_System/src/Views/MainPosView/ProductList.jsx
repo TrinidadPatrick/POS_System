@@ -5,11 +5,13 @@ import emptyImage from '../../MainUtilities/EmptyImage/empty-image.png'
 import orderStore from '../../Store/OrderStore'
 import OrderItemsProvider from '../../Hooks/OrderItemsProvider'
 import orderListStore from '../../Store/OrderListStore'
+import { FaCircleMinus } from "react-icons/fa6";
+import { FaCirclePlus } from "react-icons/fa6";
 
 const ProductList = (props) => {
     const {selectedCategory, searchValue} = props
     const {orders, insertOrder} = orderStore() //Single Order in the billing
-    const {order_items, insertOrders} = orderListStore() //All order lists
+    const {orderItems, insertOrders} = orderListStore() //All order lists
     const {getProducts} = ProductProvider()
     const {getOrders} = OrderItemsProvider()
     const {productList, insertProduct} = productStore()
@@ -21,17 +23,6 @@ const ProductList = (props) => {
         const result = newProducts.filter((product)=> product.product_name.toLowerCase().includes(value.toLowerCase()))
         return result
     }
-
-    const fetchProduct = async () => {
-        const products = await getProducts()
-        insertProduct(products)
-    }
-
-    const fetchOrders = async () => {
-        const orders = await getOrders()
-        insertOrders(orders)
-    }
-
 
     useEffect(()=>{
         const updatedProducts = productList?.map((product)=>{
@@ -92,6 +83,29 @@ const ProductList = (props) => {
 
     }
 
+    const incrementQty = (productId, selectedVariant) => {
+        const newOrders = [...orders.orderList]
+        const index = newOrders.findIndex((order)=> order.order_product_id === productId && order.order_product_variant === selectedVariant)
+        newOrders[index].order_qty = Number(newOrders[index].order_qty) + 1
+        newOrders[index].order_product_price = Number(newOrders[index].order_product_price) + Number(newOrders[index].order_product_original_price)
+        insertOrder({...orders, orderList : newOrders})
+    }
+
+    const decrementQty = (productId, selectedVariant) => {
+        const newOrders = [...orders.orderList]
+        const index = newOrders.findIndex((order)=> order.order_product_id === productId && order.order_product_variant === selectedVariant)
+        if(newOrders[index].order_qty === 1)
+        {
+            newOrders.splice(index, 1)
+            insertOrder({...orders, orderList : newOrders})
+            return
+        }
+        newOrders[index].order_qty = Number(newOrders[index].order_qty) - 1
+        newOrders[index].order_product_price = Number(newOrders[index].order_product_price) - Number(newOrders[index].order_product_original_price)
+        insertOrder({...orders, orderList : newOrders})
+    }
+
+    // console.log(orders.orderList)
 
   return (
     <div className=' w-full gap-3 semiSm:grid-cols-2 grid lg:grid-cols-3 xl:grid-cols-4'>
@@ -104,6 +118,9 @@ const ProductList = (props) => {
                 newProduct[productIndex].selectedVariant = name
                 setProducts(newProduct)
             }
+            const isSelected = orders.orderList.some((order)=> order.order_product_id === product.id && order.order_product_variant === product.selectedVariant)
+            const amount = orders.orderList.find((order)=> order.order_product_id === product.id && order.order_product_variant === product.selectedVariant)?.order_qty
+
             return (
                 <div key={product.id} className='w-full border border-gray-100 h-[240px] semiSm:h-[200px] lg:h-[237px] bg-white flex flex-col p-2 rounded shadow-sm'>
                     {/* Top Part */}
@@ -144,7 +161,19 @@ const ProductList = (props) => {
                         </div>
                         {/* Add to bill button */}
                         <div className='w-full flex'>
-                            <button onClick={()=>addToBilling(product)} className='text-xs lg:text-sm text-center w-full bg-theme-medium py-2 rounded text-white'>Add to Billing</button>
+                            {
+                                isSelected ?
+                                <div className='w-full'>
+                                {/* <h6 className='text-xs mb-1 text-gray-800'>Amount</h6> */}
+                                <div className='w-full bg-theme-extraLight py-1.5 px-2 rounded-full flex items-center justify-between'>
+                                    <button onClick={()=>decrementQty(product.id, product.selectedVariant)}><FaCircleMinus size={25} color='#A67B5B' /></button>
+                                    <h6 className='text-sm'>{amount}</h6>
+                                    <button onClick={()=>incrementQty(product.id, product.selectedVariant)}><FaCirclePlus size={25} color='#A67B5B' /></button>
+                                </div>
+                                </div>
+                                :
+                                <button onClick={()=>addToBilling(product)} className='text-xs lg:text-sm text-center w-full bg-theme-medium py-2 rounded text-white'>Add to Billing</button>
+                            }
                         </div>
                     </div>
                 </div>

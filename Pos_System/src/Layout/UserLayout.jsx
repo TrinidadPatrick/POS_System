@@ -33,8 +33,6 @@ const UserLayout = () => {
     }
   }
 
-  // console.log(token)
-
   useEffect(()=>{
     getUser()
   },[])

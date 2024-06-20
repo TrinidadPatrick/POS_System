@@ -99,7 +99,7 @@ const CustomerChart = () => {
 
 
   return (
-    <div>
+    <div className='max-h-[200px] h-[200px]'>
         <Chart
       options={chartOptions}
       series={chartSeries}

@@ -112,9 +112,9 @@ const RightView = () => {
         </div>
 
         <Modal ariaHideApp={false} style={modalStyles} isOpen={isOrderModalOpen} >
-            <div className='p-3 flex flex-col items-end bg-white'>
+            <div className='p-0 flex flex-col items-end bg-white'>
             <OrderListModal setIsOrderModalOpen={setIsOrderModalOpen} />
-            <button onClick={()=>setIsOrderModalOpen(false)} className='px-2 py-1 bg-gray-100 text-gray-700 mt-2'>
+            <button onClick={()=>setIsOrderModalOpen(false)} className='px-2 py-1 m-2 bg-gray-100 text-gray-700 mt-2'>
                 Cancel
             </button>
             </div>

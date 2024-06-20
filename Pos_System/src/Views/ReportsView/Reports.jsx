@@ -48,17 +48,19 @@ const Reports = () => {
         <input type='date' onChange={(e)=>filterReport(e.target.value)} className='border py-1 px-2 rounded-sm shadow-sm' />
         </div>
       </div>
-      <div className='flex max-h-[200px] h-[200px] flex-col semiMd:flex-row space-x-2 justify-evenly'>
+
+
+      <div className='flex flex-col semiMd:flex-row gap-2 justify-evenly'>
         {/* Summary Box */}
-      <div className='w-[500px] h-full'>
+      <div className='w-full lg:w-[500px] max-h-[200px] h-[200px] sm:h-[100px] md:h-[200px]'>
         <SummaryBoxes />
       </div>
-      <div className='flex-1 p-2 shadow rounded bg-white '>
+      <div className='w-full p-2 min-h-[200px] max-h-[200px] h-[200px] shadow rounded bg-white '>
         <SalesChart />
       </div>
       </div>
 
-      <div className='w-full p-2 shadow rounded bg-white'>
+      <div className='w-full p-2 min-h-[200px] shadow max-h-[200px] h-[200px] rounded bg-white'>
         <CustomerChart />
       </div>
 

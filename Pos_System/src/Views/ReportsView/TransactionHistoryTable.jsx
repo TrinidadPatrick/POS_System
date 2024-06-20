@@ -5,7 +5,6 @@ const TransactionHistoryTable = () => {
     const {report} = reportStore()
     const {orderItems} = report
 
-    console.log(orderItems)
   return (
     <div className='w-full min-h-[400px] max-h-[400px] rounded overflow-auto scrollBar '>
         <table className='w-full'>
@@ -24,39 +23,39 @@ const TransactionHistoryTable = () => {
             </thead>
             <tbody>
                 {
-                    orderItems?.map((order)=>{
+                    orderItems?.map((order, index)=>{
                         const date = new Date(order.created_at).toLocaleTimeString('EN-US', {
                             hour12 : true,
                            hour : '2-digit',
                            minute : '2-digit'
                         })
                         return (
-                            <tr className='border-b'>
-                                <td className='max-w-[50px] overflow-hidden text-center py-4 '>
+                            <tr key={index} className='border-b'>
+                                <td className='max-w-[50px] min-w-[100px] overflow-hidden text-center py-4 '>
                                     <p className='py-2'>{order.order_number}</p>
                                 </td>
-                                <td className='max-w-[150px] overflow-hidden text-center '>
+                                <td className='max-w-[150px] min-w-[150px] overflow-hidden text-center '>
                                     <p className='py-2'>{order.product_name}</p>
                                 </td>
-                                <td className='max-w-[150px] overflow-hidden '>
+                                <td className='max-w-[150px] min-w-[150px] overflow-hidden '>
                                     <p className='py-2'>{order.product_category}</p>
                                 </td>
-                                <td className='max-w-[150px] overflow-hidden '>
+                                <td className='max-w-[150px] min-w-[150px] overflow-hidden '>
                                     <p className='py-2'>{order.product_variant}</p>
                                 </td>
-                                <td className='max-w-[150px] overflow-hidden '>
+                                <td className='max-w-[150px] min-w-[150px] overflow-hidden '>
                                     <p className='py-2'>₱{order.price}</p>
                                 </td>
-                                <td className='max-w-[150px] overflow-hidden text-center'>
+                                <td className='max-w-[150px] min-w-[150px] overflow-hidden text-center'>
                                     <p className='py-2'>{order.order_qty}x</p>
                                 </td>
-                                <td className='max-w-[150px] overflow-hidden text-center'>
+                                <td className='max-w-[150px] min-w-[150px] overflow-hidden text-center'>
                                     <p className='py-2'>₱{order.total_price}</p>
                                 </td>
-                                <td className={`max-w-[150px] ${order.order_status === "CANCELLED" && 'text-red-500'} overflow-hidden text-center`}>
+                                <td className={`max-w-[150px] min-w-[150px] ${order.order_status === "CANCELLED" && 'text-red-500'} overflow-hidden text-center`}>
                                     <p className='py-2'>{order.order_status.slice(0,1)+order.order_status.slice(1).toLowerCase()}</p>
                                 </td>
-                                <td className='max-w-[150px] overflow-hidden text-center'>
+                                <td className='max-w-[150px] min-w-[150px] overflow-hidden text-center'>
                                     <p className='py-2'>{date}</p>
                                 </td>
                             </tr>

@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return response()->json(['user' => $user, 'categories' => $categories, 'products' => $products, 'orders' => $orders], 201);
     });
 
+    Route::patch('/updateUser/{id}', [AuthController::class, 'updateUser']);
+
     // Categories API
     Route::resource('/category', CategoryController::class);
 

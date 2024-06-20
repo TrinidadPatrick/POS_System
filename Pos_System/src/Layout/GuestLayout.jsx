@@ -8,7 +8,6 @@ const GuestLayout = () => {
   if(token){
     return <Navigate to="/" />
   }
-  console.log(token)
 
   return (
     <div className='w-full h-screen  flex flex-col'>
