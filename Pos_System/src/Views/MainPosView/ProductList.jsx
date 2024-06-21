@@ -108,7 +108,7 @@ const ProductList = (props) => {
     // console.log(orders.orderList)
 
   return (
-    <div className=' w-full gap-3 semiSm:grid-cols-2 grid lg:grid-cols-3 xl:grid-cols-4'>
+    <div className=' w-full gap-3 semiSm:grid-cols-4 grid lg:grid-cols-3 xl:grid-cols-4'>
     {
         products?.map((product, index)=>{
 

@@ -16,7 +16,6 @@ const Login = () => {
         password : '',
 
     })
-    const [fieldError, setFieldError] = useState([])
     const [text, settext] = useState('')
 
     const handleChange = (key, value) => {
@@ -45,12 +44,12 @@ const Login = () => {
   return (
     <main className='w-full h-full bg-theme-extraLight flex flex-col justify-center items-center'>
         {/* Main Container */}
-        <div className='w-[90%] xl:w-[70%] h-[90%] bg-white shadow-lg rounded-2xl grid grid-cols-1 sm:grid-cols-2 overflow-hidden'>
-            <div className='hidden sm:flex col-span-1 bg-white p-10 relative'>
-                <img src={loginImage} alt="image" className='-top-[20] ' />
+        <div className='w-full h-full semiSm:w-[90%] xl:w-[70%] semiSm:h-[90%] bg-gray-100 shadow-lg semiSm:rounded-2xl grid grid-cols-1 sm:grid-cols-2 overflow-hidden'>
+            <div className='hidden sm:flex  flex-col items-center justify-center bg-white p-10 relative'>
+                <img src={loginImage} alt="image" className='-top-[20] w-64 miniMd:w-72 lg:w-96 ' />
             </div>
             {/* Right Container */}
-            <div className='bg-white w-full px-24 flex flex-col space-y-5 justify-center items-center'>
+            <div className='bg-white w-full px-5 lg:px-24 flex flex-col space-y-5 justify-center items-center'>
                 <div id='Logo_container' className='w-full flex justify-center py-0'>
                     <img src={logo} alt="Logo" className='w-48' />
                 </div>

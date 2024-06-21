@@ -17,6 +17,7 @@ export default {
       },
       screens : {
         semiMd : "850px",
+        miniMd : "700px",
         semiBase : "610px",
         semiSm : "510px",
         semiXs : "400px"

@@ -9,6 +9,7 @@ import WindowSizeProvider from '../../Hooks/WindowSizeProvider'
 const Account = () => {
   const {user, setUser} = useAuthContext()
   const [uploading, setUploading] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -129,6 +130,7 @@ const Account = () => {
 
   const handleSubmit =async () => {
         try {
+          setLoading(true)
           const result = await http.patch(`updateUser/${user.id}`, form)
           const newUser = result.data.user
           Object.entries(newUser).map(([key, value])=>{
@@ -138,6 +140,8 @@ const Account = () => {
         } catch (error) {
           console.log(error)
           notify('Failed to update user', 'fail')
+        } finally {
+          setLoading(false)
         }
   };
 
@@ -237,11 +241,8 @@ const Account = () => {
           </div>
         }
 
-        <button
-        onClick={()=>handleSubmit()}
-          className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-theme-medium hover:bg-theme-semiLight focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Save Changes
+        <button onClick={()=>handleSubmit()} className="w-full h-9 flex justify-center items-center px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-theme-medium hover:bg-theme-semiLight focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          {loading ? <LoadingProcess /> : 'Save Changes'}
         </button>
       </div>
       {/* Right Side */}

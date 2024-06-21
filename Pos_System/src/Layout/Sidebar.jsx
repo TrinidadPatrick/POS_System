@@ -21,7 +21,7 @@ const Sidebar = () => {
         const result = await http.post('logout', {})
         localStorage.removeItem('ACCESS_TOKEN')
         setToken(null)
-        navigate('/login')
+        window.location.href = '/login'
     } catch (error) {
         console.log(error)
     }
